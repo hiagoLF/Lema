@@ -1,0 +1,52 @@
+{
+  "customersDebt": [
+    {
+      "name": "Carlos Dias Chagas",
+      "debtor": false
+    },
+    {
+      "name": "Carlos Dias Chagas",
+      "debtor": false
+    },
+    {
+      "name": "Mascos Castanha",
+      "debtor": true
+    },
+    {
+      "name": "Carlos Dias Chagas",
+      "debtor": false
+    },
+    {
+      "name": "Carlos Dias Chagas",
+      "debtor": false
+    },
+    {
+      "name": "Carlos Dias Chagas",
+      "debtor": false
+    },
+    {
+      "name": "Carlos Dias Chagas",
+      "debtor": false
+    },
+    {
+      "name": "Carlos Dias Chagas",
+      "debtor": false
+    },
+    {
+      "name": "Carlos Dias Chagas",
+      "debtor": false
+    },
+    {
+      "name": "Carlos Dias Chagas",
+      "debtor": false
+    },
+    {
+      "name": "Carlos Dias Chagas",
+      "debtor": false
+    },
+    {
+      "name": "Carlos Dias Chagas",
+      "debtor": false
+    }
+  ]
+}
