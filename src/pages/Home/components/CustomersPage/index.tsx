@@ -42,7 +42,7 @@ const CustomersPage: React.FC = () => {
             {customersDebt.map((customer, index) => (
               <DataTable.Row
                 key={index}
-                style={!customer.debtor && styles.lowOpacity}>
+                style={!customer.debtor ? styles.lowOpacity : styles.lightRed}>
                 <DataTable.Cell>{customer.name}</DataTable.Cell>
                 <DataTable.Cell style={styles.contentToLeft}>
                   {customer.debtor ? 'Débito' : 'Quite'}

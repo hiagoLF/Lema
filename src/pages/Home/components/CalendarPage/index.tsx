@@ -42,7 +42,7 @@ const CalendarPage: React.FC = () => {
             {events.map((event, index) => (
               <DataTable.Row
                 key={index}
-                style={event.done && styles.lowOpacity}>
+                style={event.done ? styles.lowOpacity : styles.lightRed}>
                 <DataTable.Cell>{event.title}</DataTable.Cell>
                 <DataTable.Cell style={styles.contentToRight}>
                   {event.date}

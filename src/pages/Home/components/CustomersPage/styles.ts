@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     width: '97%',
     marginTop: 5,
+    backgroundColor: '#DAEDD7',
   },
   searchOrCreateCustomer: {
     marginBottom: 5,
