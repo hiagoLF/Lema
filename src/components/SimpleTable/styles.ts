@@ -9,3 +9,11 @@ export const TableContainer = styled(Card)`
 export const TableLeftCell = styled(DataTable.Cell)`
   flex: 2.4;
 `;
+
+interface TableCellProps {
+  interesting: boolean;
+}
+
+export const TableCell = styled.View<TableCellProps>`
+  opacity: ${({interesting}) => (interesting ? 1 : 0.3)};
+`;

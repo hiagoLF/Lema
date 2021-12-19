@@ -1,11 +1,12 @@
 import React from 'react';
 import {View} from 'react-native';
-import {TableContainer, TableLeftCell} from './styles';
+import {TableCell, TableContainer, TableLeftCell} from './styles';
 import {DataTable} from 'react-native-paper';
 
 interface TableData {
   key: string;
   value: string;
+  interesting: boolean;
 }
 
 interface SimpleTableProps {
@@ -29,12 +30,12 @@ const SimpleTable: React.FC<SimpleTableProps> = ({
           </DataTable.Header>
 
           {data.map((event, key) => (
-            <View key={key}>
+            <TableCell key={key} interesting={event.interesting}>
               <DataTable.Row>
                 <TableLeftCell>{event.key}</TableLeftCell>
                 <DataTable.Cell numeric>{event.value}</DataTable.Cell>
               </DataTable.Row>
-            </View>
+            </TableCell>
           ))}
 
           <DataTable.Pagination
