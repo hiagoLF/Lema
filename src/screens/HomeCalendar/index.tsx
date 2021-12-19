@@ -1,13 +1,16 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import SimpleTable from '../../components/SimpleTable';
+import {ScrollView} from 'react-native';
 
-// import { Container } from './styles';
-
+const events = Array(10).fill({
+  key: 'Aniversário de Heloísa é muito legal',
+  value: '18/09/18',
+});
 const HomeCalendar: React.FC = () => {
   return (
-    <View>
-      <Text>Calendário</Text>
-    </View>
+    <ScrollView>
+      <SimpleTable keysName="Evento" valuesName="Data" data={events} />
+    </ScrollView>
   );
 };
 

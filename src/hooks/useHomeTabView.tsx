@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import React from 'react';
 import {ReactNode, useState} from 'react';
 import {useWindowDimensions} from 'react-native';
