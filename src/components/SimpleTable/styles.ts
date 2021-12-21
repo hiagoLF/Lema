@@ -14,6 +14,6 @@ interface TableCellProps {
   interesting: boolean;
 }
 
-export const TableCell = styled.View<TableCellProps>`
+export const TableCell = styled.TouchableOpacity<TableCellProps>`
   opacity: ${({interesting}) => (interesting ? 1 : 0.3)};
 `;

@@ -2,6 +2,7 @@ import React from 'react';
 import {View} from 'react-native';
 import {TableCell, TableContainer, TableLeftCell} from './styles';
 import {DataTable} from 'react-native-paper';
+import {useNavigation} from '@react-navigation/native';
 
 interface TableData {
   key: string;
@@ -13,13 +14,17 @@ interface SimpleTableProps {
   keysName: string;
   valuesName: string;
   data: TableData[];
+  goToPage?: string;
 }
 
 const SimpleTable: React.FC<SimpleTableProps> = ({
   keysName,
   valuesName,
   data,
+  goToPage = '',
 }) => {
+  const navigation = useNavigation();
+
   return (
     <View>
       <TableContainer>
@@ -30,7 +35,12 @@ const SimpleTable: React.FC<SimpleTableProps> = ({
           </DataTable.Header>
 
           {data.map((event, key) => (
-            <TableCell key={key} interesting={event.interesting}>
+            <TableCell
+              key={key}
+              interesting={event.interesting}
+              onPress={() =>
+                navigation.navigate(goToPage as never, {} as never)
+              }>
               <DataTable.Row>
                 <TableLeftCell>{event.key}</TableLeftCell>
                 <DataTable.Cell numeric>{event.value}</DataTable.Cell>

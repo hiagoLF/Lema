@@ -43,7 +43,12 @@ const HomeCustomers: React.FC = () => {
         placeholder="Cliente"
         onAddButtonPress={() => setCreateCustomerModalOpen(true)}
       />
-      <SimpleTable keysName="Client" valuesName="Situação" data={customers} />
+      <SimpleTable
+        keysName="Cliente"
+        valuesName="Situação"
+        data={customers}
+        goToPage="Customers"
+      />
     </ScrollView>
   );
 };
