@@ -21,7 +21,7 @@ const SimpleTable: React.FC<SimpleTableProps> = ({
   keysName,
   valuesName,
   data,
-  goToPage = '',
+  goToPage = 'Home',
 }) => {
   const navigation = useNavigation();
 

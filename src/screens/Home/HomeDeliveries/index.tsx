@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {ScrollView} from 'react-native';
-import DinamicSearchBar from '../../components/DinamicSearchBar';
-import SimpleTable from '../../components/SimpleTable';
+import DinamicSearchBar from '../../../components/DinamicSearchBar';
+import SimpleTable from '../../../components/SimpleTable';
 
 const deliveries = Array(10)
   .fill({
@@ -29,7 +29,12 @@ const HomeDeliveries: React.FC = () => {
         placeholder="Evento"
         onAddButtonPress={() => {}}
       />
-      <SimpleTable keysName="Nome" valuesName="Entregue" data={deliveries} />
+      <SimpleTable
+        keysName="Nome"
+        valuesName="Entregue"
+        data={deliveries}
+        goToPage="Delivery"
+      />
     </ScrollView>
   );
 };

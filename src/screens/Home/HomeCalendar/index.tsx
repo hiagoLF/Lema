@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import SimpleTable from '../../components/SimpleTable';
+import SimpleTable from '../../../components/SimpleTable';
 import {ScrollView} from 'react-native';
-import DinamicSearchBar from '../../components/DinamicSearchBar';
+import DinamicSearchBar from '../../../components/DinamicSearchBar';
 
 const events = Array(10)
   .fill({

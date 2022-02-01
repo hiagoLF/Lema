@@ -4,10 +4,9 @@ import {ReactNode, useState} from 'react';
 import {useWindowDimensions} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {SceneMap, TabBar} from 'react-native-tab-view';
-import HomeCalendar from '../screens/HomeCalendar';
-import HomeCustomers from '../screens/HomeCustomers';
-import HomeDeliveries from '../screens/HomeDeliveries';
-
+import HomeCalendar from '../screens/Home/HomeCalendar';
+import HomeCustomers from '../screens/Home/HomeCustomers';
+import HomeDeliveries from '../screens/Home/HomeDeliveries';
 const renderScene = SceneMap({
   calendar: HomeCalendar,
   customers: HomeCustomers,

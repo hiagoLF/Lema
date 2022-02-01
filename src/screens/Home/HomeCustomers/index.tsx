@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {ScrollView} from 'react-native';
-import DinamicSearchBar from '../../components/DinamicSearchBar';
-import SimpleTable from '../../components/SimpleTable';
-import SingleInputModal from '../../components/SingleInputModal';
+import DinamicSearchBar from '../../../components/DinamicSearchBar';
+import SimpleTable from '../../../components/SimpleTable';
+import SingleInputModal from '../../../components/SingleInputModal';
 
 const customers = Array(10)
   .fill({
@@ -26,7 +26,7 @@ const HomeCustomers: React.FC = () => {
         modalOpen={createCustomerModalOpen}
         onRequestClose={() => setCreateCustomerModalOpen(false)}
         title="Novo Cliente"
-        inputPlaceholder="None"
+        inputPlaceholder="Nome"
         onInputTextChange={setnewCustomerName}
         inputText={newCustomerName}
         buttonIcon="account-plus"
