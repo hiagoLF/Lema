@@ -26,9 +26,13 @@ const HomeCalendar: React.FC = () => {
         hidden={searchBarHidden}
         onBarChange={setSearchBarHidden}
         placeholder="Evento"
-        onAddButtonPress={() => {}}
       />
-      <SimpleTable keysName="Evento" valuesName="Data" data={events} />
+      <SimpleTable
+        keysName="Evento"
+        valuesName="Data"
+        data={events}
+        goToPage="Events"
+      />
     </ScrollView>
   );
 };

@@ -5,6 +5,8 @@ import Home from './screens/Home';
 import {Provider as PaperProvider} from 'react-native-paper';
 import Customers from './screens/Customers';
 import Delivery from './screens/Delivery';
+import Events from './screens/Events';
+import CustomerFinance from './screens/CustomerFinance';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +18,8 @@ const App: React.FC = () => {
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Customers" component={Customers} />
           <Stack.Screen name="Delivery" component={Delivery} />
+          <Stack.Screen name="Events" component={Events} />
+          <Stack.Screen name="CustomerFinance" component={CustomerFinance} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>

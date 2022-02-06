@@ -13,7 +13,7 @@ interface DinamicSearchBar {
   hidden: boolean;
   onBarChange: (value: boolean) => void;
   placeholder: string;
-  onAddButtonPress: () => void;
+  onAddButtonPress?: () => void;
 }
 
 const DinamicSearchBar: React.FC<DinamicSearchBar> = ({
@@ -31,9 +31,11 @@ const DinamicSearchBar: React.FC<DinamicSearchBar> = ({
           <TouchableOpacity onPress={() => onBarChange(false)}>
             <Avatar.Icon size={20} icon="magnify" />
           </TouchableOpacity>
-          <AddButtonContainer onPress={onAddButtonPress}>
-            <Avatar.Icon size={20} icon="plus" />
-          </AddButtonContainer>
+          {onAddButtonPress && (
+            <AddButtonContainer onPress={onAddButtonPress}>
+              <Avatar.Icon size={20} icon="plus" />
+            </AddButtonContainer>
+          )}
         </OpenSearchBarContainer>
       ) : (
         <StyledSearchbar

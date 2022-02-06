@@ -1,4 +1,3 @@
-/* eslint-disable no-alert */
 import React from 'react';
 import {ReactNode, useState} from 'react';
 import {useWindowDimensions} from 'react-native';
@@ -33,11 +32,6 @@ const useHomeTabView = () => {
   const [index, setIndex] = useState(0);
   const {colors} = useTheme();
 
-  const handleLogOutButtonPress = () => {
-    //@ts-ignore
-    alert('Sair');
-  };
-
   const renderTabBar = (props: any): ReactNode => {
     return <TabBar {...props} style={{backgroundColor: colors.primary}} />;
   };
@@ -49,7 +43,6 @@ const useHomeTabView = () => {
     setIndex,
     layout,
     renderTabBar,
-    handleLogOutButtonPress,
   };
 };
 

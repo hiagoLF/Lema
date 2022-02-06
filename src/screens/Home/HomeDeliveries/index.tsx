@@ -27,7 +27,6 @@ const HomeDeliveries: React.FC = () => {
         hidden={searchBarHidden}
         onBarChange={setSearchBarHidden}
         placeholder="Evento"
-        onAddButtonPress={() => {}}
       />
       <SimpleTable
         keysName="Nome"

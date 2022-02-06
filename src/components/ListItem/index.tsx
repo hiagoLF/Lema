@@ -1,6 +1,7 @@
 import React from 'react';
 import {View} from 'react-native';
-import {Title, Text} from 'react-native-paper';
+import {Divider} from 'react-native-paper';
+import {ListText, ListTitle} from './styles';
 
 interface ListItemProps {
   itemTitle: string;
@@ -10,9 +11,10 @@ interface ListItemProps {
 const ListItem: React.FC<ListItemProps> = ({itemTitle, value}) => {
   return (
     <View>
-      <Title>{itemTitle}</Title>
+      <Divider />
+      <ListTitle>{itemTitle}</ListTitle>
       {/* @ts-ignore */}
-      <Text>{value}</Text>
+      <ListText>{value}</ListText>
     </View>
   );
 };
