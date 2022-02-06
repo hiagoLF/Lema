@@ -54,7 +54,7 @@ const Customers: React.FC = () => {
             valuesName="Data"
             goToPage="Delivery"
           />
-          <MarginButton onPress={() => console.log('Criar nova entrega')}>
+          <MarginButton onPress={() => navigation.navigate('CreateDelivery')}>
             Nova Entrega
           </MarginButton>
         </MarginCard>
@@ -67,7 +67,7 @@ const Customers: React.FC = () => {
             valuesName="Data"
             goToPage="Events"
           />
-          <MarginButton onPress={() => console.log('Criar nova entrega')}>
+          <MarginButton onPress={() => console.log('Criar Evento')}>
             Novo Evento
           </MarginButton>
         </MarginCard>

@@ -21,6 +21,11 @@ const HomeHeader: React.FC = () => {
           />
         }>
         <Menu.Item
+          icon="brightness-6"
+          title="Escuro"
+          onPress={() => console.log('saindo aqui...')}
+        />
+        <Menu.Item
           icon="logout-variant"
           title="Sair"
           onPress={() => console.log('saindo aqui...')}

@@ -1,9 +1,14 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {ScrollView, View} from 'react-native';
-import {Appbar, Button, Card, TouchableRipple} from 'react-native-paper';
+import {Appbar, Card, TouchableRipple} from 'react-native-paper';
 import ListItem from '../../components/ListItem';
-import {Container, MarginCard, SizedCardTitle} from '../../components/Styled';
+import {
+  Container,
+  MarginButton,
+  MarginCard,
+  SizedCardTitle,
+} from '../../components/Styled';
 
 const Events: React.FC = () => {
   const navigation = useNavigation();
@@ -30,9 +35,9 @@ const Events: React.FC = () => {
             </View>
           </Card.Content>
         </MarginCard>
-        <Button onPress={() => console.log('Bora Editar essa bagunça')}>
+        <MarginButton onPress={() => console.log('Bora Editar essa bagunça')}>
           Editar Evento
-        </Button>
+        </MarginButton>
       </ScrollView>
     </Container>
   );
