@@ -15,8 +15,6 @@ const CreateDelivery: React.FC = () => {
   });
   const [open, setOpen] = useState(false);
 
-  console.log(date);
-
   return (
     <Container>
       <Appbar.Header>
@@ -45,7 +43,9 @@ const CreateDelivery: React.FC = () => {
               <TextInput
                 style={{marginTop: 10}}
                 label="Data de Entrega"
-                right={<TextInput.Icon name="eye" />}
+                right={
+                  <TextInput.Icon name="eye" onPress={() => setOpen(true)} />
+                }
                 mode="outlined"
                 value={date.label}
                 editable={false}

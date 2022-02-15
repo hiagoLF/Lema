@@ -8,6 +8,7 @@ import Delivery from './screens/Delivery';
 import Events from './screens/Events';
 import CustomerFinance from './screens/CustomerFinance';
 import CreateDelivery from './screens/CreateDelivery';
+import CreateEvent from './screens/CreateEvent';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ const App: React.FC = () => {
           <Stack.Screen name="Events" component={Events} />
           <Stack.Screen name="CustomerFinance" component={CustomerFinance} />
           <Stack.Screen name="CreateDelivery" component={CreateDelivery} />
+          <Stack.Screen name="CreateEvent" component={CreateEvent} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
