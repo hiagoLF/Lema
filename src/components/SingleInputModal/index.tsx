@@ -20,6 +20,7 @@ interface SingleInputModalProps {
   onButtonPress: () => void;
   buttonDisabled: boolean;
   buttonText: string;
+  loading: boolean;
 }
 
 const SingleInputModal: React.FC<SingleInputModalProps> = ({
@@ -33,6 +34,7 @@ const SingleInputModal: React.FC<SingleInputModalProps> = ({
   onButtonPress,
   buttonDisabled,
   buttonText,
+  loading,
 }) => {
   return (
     <Modal
@@ -53,7 +55,8 @@ const SingleInputModal: React.FC<SingleInputModalProps> = ({
             icon={buttonIcon}
             mode="contained"
             onPress={onButtonPress}
-            disabled={buttonDisabled}>
+            disabled={buttonDisabled}
+            loading={loading}>
             {buttonText}
           </Button>
         </ModalCard>

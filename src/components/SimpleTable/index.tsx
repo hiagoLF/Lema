@@ -3,8 +3,9 @@ import {View} from 'react-native';
 import {TableCell, TableContainer, TableLeftCell} from './styles';
 import {DataTable} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
+import {PaginationObject} from '../../screens/Home/HomeCustomers';
 
-interface TableData {
+export interface TableData {
   key: string;
   value: string;
   interesting: boolean;
@@ -15,6 +16,8 @@ interface SimpleTableProps {
   valuesName: string;
   data: TableData[];
   goToPage?: string;
+  paginationInfo: PaginationObject | null;
+  onPageChange: (pageToGo: number) => void;
 }
 
 const SimpleTable: React.FC<SimpleTableProps> = ({
@@ -22,6 +25,8 @@ const SimpleTable: React.FC<SimpleTableProps> = ({
   valuesName,
   data,
   goToPage = 'Home',
+  paginationInfo,
+  onPageChange,
 }) => {
   const navigation = useNavigation();
 
@@ -48,14 +53,18 @@ const SimpleTable: React.FC<SimpleTableProps> = ({
             </TableCell>
           ))}
 
-          <DataTable.Pagination
-            page={0}
-            numberOfPages={10}
-            //@ts-ignore
-            onPageChange={() => alert('Mudando a página')}
-            label={'1 de 10'}
-            numberOfItemsPerPage={10}
-          />
+          {paginationInfo && (
+            <DataTable.Pagination
+              page={paginationInfo.currentPage}
+              numberOfPages={paginationInfo.totalPages}
+              //@ts-ignore
+              onPageChange={onPageChange}
+              label={`${paginationInfo.currentPage + 1} de ${
+                paginationInfo.totalPages
+              }`}
+              numberOfItemsPerPage={paginationInfo.currentPageItems}
+            />
+          )}
         </DataTable>
       </TableContainer>
     </View>
