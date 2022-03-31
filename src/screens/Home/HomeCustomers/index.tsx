@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
-import {Alert, ScrollView} from 'react-native';
+import {Alert, RefreshControl, ScrollView} from 'react-native';
 import DinamicSearchBar from '../../../components/DinamicSearchBar';
 import SimpleTable, {TableData} from '../../../components/SimpleTable';
 import SingleInputModal from '../../../components/SingleInputModal';
@@ -23,6 +23,7 @@ const HomeCustomers: React.FC = () => {
   const [newCustomerName, setnewCustomerName] = useState('');
   const [insertingCustomer, setInsertingCustomer] = useState(false);
   const [customersList, setCustomersList] = useState<TableData[]>([]);
+  const [refreshingPage, setRefresingPage] = useState(false);
   const [customersPaginationObject, setCustomersPaginationObject] =
     useState<PaginationObject>({
       currentPage: 0,
@@ -83,6 +84,9 @@ const HomeCustomers: React.FC = () => {
         key: customer.name,
         value: customer.status === '0' ? 'Pago' : 'Devendo',
         interesting: customer.status === '1',
+        props: {
+          customerId: customer._id,
+        },
       }));
       setCustomersList(formatedCustomers);
     } catch (error) {
@@ -99,12 +103,24 @@ const HomeCustomers: React.FC = () => {
     findCustomers(pageToGo);
   }
 
+  function handleRefreshPage() {
+    setRefresingPage(true);
+    findCustomers();
+    setRefresingPage(false);
+  }
+
   useEffect(() => {
     findCustomers();
   }, []);
 
   return (
-    <ScrollView>
+    <ScrollView
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshingPage}
+          onRefresh={handleRefreshPage}
+        />
+      }>
       <SingleInputModal
         modalOpen={createCustomerModalOpen}
         onRequestClose={() => setCreateCustomerModalOpen(false)}

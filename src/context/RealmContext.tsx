@@ -2,7 +2,8 @@
 import React, {useEffect, useState} from 'react';
 import {createContext, useContext} from 'react';
 import Realm, {User} from 'realm';
-import {appId, partitionValue} from '../../appConfig';
+import {appId, devMode, partitionValue} from '../../appConfig';
+import {seedRealm} from '../mock/seedDataBase';
 // import {ObjectId} from 'bson';
 
 interface RealmContextProps {
@@ -26,7 +27,14 @@ const RealmContext = createContext<RealmContextProps>({} as RealmContextProps);
 export const RealmProvider: React.FC = ({children}) => {
   const [realm, setRealm] = useState<Realm | null>(null);
 
-  console.log(realm);
+  useEffect(() => {
+    if (realm === null) {
+      return;
+    }
+    if (devMode) {
+      seedRealm(realm);
+    }
+  }, [realm]);
 
   async function stablishRealmApp() {
     // Abrir Aplicação Realm

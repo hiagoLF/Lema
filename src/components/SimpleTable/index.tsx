@@ -9,6 +9,7 @@ export interface TableData {
   key: string;
   value: string;
   interesting: boolean;
+  props: any;
 }
 
 interface SimpleTableProps {
@@ -44,7 +45,7 @@ const SimpleTable: React.FC<SimpleTableProps> = ({
               key={key}
               interesting={event.interesting}
               onPress={() =>
-                navigation.navigate(goToPage as never, {} as never)
+                navigation.navigate(goToPage as never, event.props as never)
               }>
               <DataTable.Row>
                 <TableLeftCell>{event.key}</TableLeftCell>

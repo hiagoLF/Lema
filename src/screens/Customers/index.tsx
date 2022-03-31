@@ -1,7 +1,9 @@
-import {useNavigation} from '@react-navigation/native';
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
 import {ScrollView} from 'react-native';
 import {Appbar, Card} from 'react-native-paper';
+import {Customer} from '../../../types/Models';
 import SimpleTable from '../../components/SimpleTable';
 import {
   Container,
@@ -9,6 +11,7 @@ import {
   MarginCard,
   SizedCardTitle,
 } from '../../components/Styled';
+import {useRealmContext} from '../../context/RealmContext';
 
 const events = new Array(5)
   .fill({
@@ -31,8 +34,33 @@ const finance = new Array(5)
 finance[0].interesting = true;
 finance[0].value = 'Pagando';
 
+type RootStackParamList = {
+  Customer: {customerId?: string};
+};
+
+type ProfileScreenRouteProp = RouteProp<RootStackParamList, 'Customer'>;
+
 const Customers: React.FC = () => {
   const navigation = useNavigation();
+  const {
+    params: {customerId},
+  } = useRoute<ProfileScreenRouteProp>();
+  const [customer, setCustomer] = useState('...');
+  const {realm} = useRealmContext();
+
+  useEffect(() => {
+    console.log('CustomerId >>> ', customerId);
+    if (!realm || !customerId) {
+      return;
+    }
+    const customerResult = realm.objectForPrimaryKey<Customer>(
+      'Customer',
+      customerId,
+    );
+
+    console.log('Customer >>> ', customerResult);
+    setCustomer(customerResult?.name || '');
+  }, []);
 
   return (
     <Container>
@@ -43,11 +71,13 @@ const Customers: React.FC = () => {
 
       <ScrollView>
         <MarginCard>
-          <SizedCardTitle title="Adélio Santos Cunha" />
+          <SizedCardTitle title={customer} />
         </MarginCard>
 
         <MarginCard>
           <Card.Title title="Entregas" titleStyle={{fontSize: 15}} />
+          {/* TODO */}
+          {/* @ts-ignore */}
           <SimpleTable
             data={events}
             keysName="Entrega"
@@ -62,6 +92,8 @@ const Customers: React.FC = () => {
 
         <MarginCard>
           <Card.Title title="Eventos" titleStyle={{fontSize: 15}} />
+          {/* TODO */}
+          {/* @ts-ignore */}
           <SimpleTable
             data={events}
             keysName="Evento"
@@ -76,6 +108,8 @@ const Customers: React.FC = () => {
 
         <MarginCard>
           <Card.Title title="Financeiro" titleStyle={{fontSize: 15}} />
+          {/* TODO */}
+          {/* @ts-ignore */}
           <SimpleTable
             data={finance}
             keysName="Pagamento"
