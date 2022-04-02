@@ -3,23 +3,13 @@ import React, {useEffect, useState} from 'react';
 import {createContext, useContext} from 'react';
 import Realm, {User} from 'realm';
 import {appId, devMode, partitionValue} from '../../appConfig';
+import {Customer} from '../database/models/Customer';
+import {Delivery} from '../database/models/Delivery';
 import {seedRealm} from '../mock/seedDataBase';
 // import {ObjectId} from 'bson';
 
 interface RealmContextProps {
   realm: Realm | null;
-}
-
-export class Customer {
-  static schema = {
-    name: 'Customer',
-    properties: {
-      _id: 'string',
-      name: 'string',
-      status: 'string',
-    },
-    primaryKey: '_id',
-  };
 }
 
 const RealmContext = createContext<RealmContextProps>({} as RealmContextProps);
@@ -63,7 +53,7 @@ export const RealmProvider: React.FC = ({children}) => {
     }
     try {
       const config = {
-        schema: [Customer.schema],
+        schema: [Customer.schema, Delivery.schema],
         sync: {
           user: user,
           partitionValue,

@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {ScrollView} from 'react-native';
 import {Appbar, Card} from 'react-native-paper';
-import {Customer} from '../../../types/Models';
+import {Delivery} from '../../../types/Models';
 import SimpleTable from '../../components/SimpleTable';
 import {
   Container,
@@ -12,6 +12,8 @@ import {
   SizedCardTitle,
 } from '../../components/Styled';
 import {useRealmContext} from '../../context/RealmContext';
+import {useAppTable} from '../../hooks/useAppTable';
+import {formatDateToBr} from '../../utils/date';
 
 const events = new Array(5)
   .fill({
@@ -35,7 +37,7 @@ finance[0].interesting = true;
 finance[0].value = 'Pagando';
 
 type RootStackParamList = {
-  Customer: {customerId?: string};
+  Customer: {customerId?: string; customerName?: string};
 };
 
 type ProfileScreenRouteProp = RouteProp<RootStackParamList, 'Customer'>;
@@ -43,24 +45,36 @@ type ProfileScreenRouteProp = RouteProp<RootStackParamList, 'Customer'>;
 const Customers: React.FC = () => {
   const navigation = useNavigation();
   const {
-    params: {customerId},
+    params: {customerName, customerId},
   } = useRoute<ProfileScreenRouteProp>();
-  const [customer, setCustomer] = useState('...');
   const {realm} = useRealmContext();
 
-  useEffect(() => {
-    console.log('CustomerId >>> ', customerId);
-    if (!realm || !customerId) {
-      return;
-    }
-    const customerResult = realm.objectForPrimaryKey<Customer>(
-      'Customer',
-      customerId,
-    );
+  const {
+    tableData: tableDeliveries,
+    paginationInfo: deliveriesPaginationInfo,
+    onPageChange: onDeliveriesPageChange,
+  } = useAppTable<Delivery>(
+    realm,
+    5,
+    dbRealm => {
+      const deliveriesResult = dbRealm
+        .objects<Delivery>('Delivery')
+        .filtered(`customer._id == "${customerId}"`);
+      return deliveriesResult;
+    },
+    data => {
+      const interesting = data.date > new Date();
 
-    console.log('Customer >>> ', customerResult);
-    setCustomer(customerResult?.name || '');
-  }, []);
+      return {
+        key: data.name,
+        value: formatDateToBr(data.date),
+        interesting: interesting,
+        props: {
+          ...data,
+        },
+      };
+    },
+  );
 
   return (
     <Container>
@@ -71,18 +85,18 @@ const Customers: React.FC = () => {
 
       <ScrollView>
         <MarginCard>
-          <SizedCardTitle title={customer} />
+          <SizedCardTitle title={customerName || '...'} />
         </MarginCard>
 
         <MarginCard>
           <Card.Title title="Entregas" titleStyle={{fontSize: 15}} />
-          {/* TODO */}
-          {/* @ts-ignore */}
           <SimpleTable
-            data={events}
+            data={tableDeliveries}
             keysName="Entrega"
             valuesName="Data"
             goToPage="Delivery"
+            paginationInfo={deliveriesPaginationInfo}
+            onPageChange={onDeliveriesPageChange}
           />
           <MarginButton
             onPress={() => navigation.navigate('CreateDelivery' as never)}>

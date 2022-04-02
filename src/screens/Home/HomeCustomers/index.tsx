@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Alert, RefreshControl, ScrollView} from 'react-native';
 import DinamicSearchBar from '../../../components/DinamicSearchBar';
-import SimpleTable, {TableData} from '../../../components/SimpleTable';
+import SimpleTable from '../../../components/SimpleTable';
 import SingleInputModal from '../../../components/SingleInputModal';
 import {useRealmContext} from '../../../context/RealmContext';
 import {ObjectId} from 'bson';
-import {paginate} from '../../../utils/arrays';
 import {Customer} from '../../../../types/Models';
+import {useAppTable} from '../../../hooks/useAppTable';
 
 export type PaginationObject = {
   currentPage: number;
@@ -22,14 +22,32 @@ const HomeCustomers: React.FC = () => {
   const [createCustomerModalOpen, setCreateCustomerModalOpen] = useState(false);
   const [newCustomerName, setnewCustomerName] = useState('');
   const [insertingCustomer, setInsertingCustomer] = useState(false);
-  const [customersList, setCustomersList] = useState<TableData[]>([]);
-  const [refreshingPage, setRefresingPage] = useState(false);
-  const [customersPaginationObject, setCustomersPaginationObject] =
-    useState<PaginationObject>({
-      currentPage: 0,
-      totalPages: 0,
-      currentPageItems: 0,
-    });
+  const [refreshingPage, setRefreshingPage] = useState(false);
+  const {
+    tableData: customersList,
+    paginationInfo: customersPaginationObject,
+    onPageChange: handleCustomersTablePageChange,
+  } = useAppTable<Customer>(
+    realm,
+    10,
+    dbRealm => {
+      const deliveriesResult = dbRealm.objects<Customer>('Customer');
+      return deliveriesResult;
+    },
+    data => {
+      const interesting = data.status === 1 ? true : false;
+
+      return {
+        key: data.name,
+        value: interesting ? 'Pago' : 'Devendo',
+        interesting: interesting,
+        props: {
+          customerId: data._id,
+          customerName: data.name,
+        },
+      };
+    },
+  );
 
   function handleCreateCustomerButtonPress() {
     setInsertingCustomer(true);
@@ -39,7 +57,7 @@ const HomeCustomers: React.FC = () => {
         realm.create('Customer', {
           _id: new ObjectId().toString(),
           name: newCustomerName,
-          status: '0',
+          status: 0,
         });
       });
     } catch (error) {
@@ -49,69 +67,13 @@ const HomeCustomers: React.FC = () => {
     setInsertingCustomer(false);
     setnewCustomerName('');
     setCreateCustomerModalOpen(false);
-    findCustomers();
-  }
-
-  function findCustomers(pageToGo?: number) {
-    if (!realm) {
-      return;
-    }
-    try {
-      let customersResult = realm
-        .objects<Customer>('Customer')
-        .sorted('status');
-
-      const totalCustomers = customersResult.length;
-      const totalPages = Math.ceil(totalCustomers / 10);
-      // @ts-ignore
-      customersResult = paginate(
-        // @ts-ignore
-        customersResult,
-        10,
-        pageToGo !== undefined
-          ? pageToGo + 1
-          : customersPaginationObject.currentPage + 1,
-      );
-      const currentPageItems = customersResult.length;
-
-      setCustomersPaginationObject(prev => ({
-        ...prev,
-        currentPageItems,
-        totalPages,
-      }));
-
-      const formatedCustomers = customersResult.map(customer => ({
-        key: customer.name,
-        value: customer.status === '0' ? 'Pago' : 'Devendo',
-        interesting: customer.status === '1',
-        props: {
-          customerId: customer._id,
-        },
-      }));
-      setCustomersList(formatedCustomers);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  function handleCustomersTablePageChange(pageToGo: number) {
-    setCustomersPaginationObject(prev => ({
-      ...prev,
-      currentPage: pageToGo,
-    }));
-
-    findCustomers(pageToGo);
   }
 
   function handleRefreshPage() {
-    setRefresingPage(true);
-    findCustomers();
-    setRefresingPage(false);
+    setRefreshingPage(true);
+    handleCustomersTablePageChange(0);
+    setRefreshingPage(false);
   }
-
-  useEffect(() => {
-    findCustomers();
-  }, []);
 
   return (
     <ScrollView
