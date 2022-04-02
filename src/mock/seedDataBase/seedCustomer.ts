@@ -10,7 +10,7 @@ export function seedCustomer(realm: Realm) {
         realm.create('Customer', {
           _id: new ObjectID().toString(),
           name: faker.name.findName(),
-          status: Math.random(),
+          status: faker.datatype.number(1),
         });
       }
     });

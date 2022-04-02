@@ -43,13 +43,18 @@ const SimpleTable: React.FC<SimpleTableProps> = ({
           {data.map((event, key) => (
             <TableCell
               key={key}
-              interesting={event.interesting}
               onPress={() =>
                 navigation.navigate(goToPage as never, event.props as never)
               }>
               <DataTable.Row>
-                <TableLeftCell>{event.key}</TableLeftCell>
-                <DataTable.Cell numeric>{event.value}</DataTable.Cell>
+                <TableLeftCell style={{opacity: event.interesting ? 1 : 0.5}}>
+                  {event.key}
+                </TableLeftCell>
+                <DataTable.Cell
+                  style={{opacity: event.interesting ? 1 : 0.5}}
+                  numeric>
+                  {event.value}
+                </DataTable.Cell>
               </DataTable.Row>
             </TableCell>
           ))}

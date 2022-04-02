@@ -32,6 +32,7 @@ const HomeCustomers: React.FC = () => {
     10,
     dbRealm => {
       const deliveriesResult = dbRealm.objects<Customer>('Customer');
+      console.log(deliveriesResult);
       return deliveriesResult;
     },
     data => {
@@ -39,7 +40,7 @@ const HomeCustomers: React.FC = () => {
 
       return {
         key: data.name,
-        value: interesting ? 'Pago' : 'Devendo',
+        value: interesting ? 'DEVENDO' : 'Pago',
         interesting: interesting,
         props: {
           customerId: data._id,

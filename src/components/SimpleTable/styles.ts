@@ -10,10 +10,4 @@ export const TableLeftCell = styled(DataTable.Cell)`
   flex: 2.4;
 `;
 
-interface TableCellProps {
-  interesting: boolean;
-}
-
-export const TableCell = styled.TouchableOpacity<TableCellProps>`
-  opacity: ${({interesting}) => (interesting ? 1 : 0.3)};
-`;
+export const TableCell = styled.TouchableOpacity``;

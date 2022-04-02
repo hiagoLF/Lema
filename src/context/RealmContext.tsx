@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
 import {createContext, useContext} from 'react';
+import {Text, View} from 'react-native';
 import Realm, {User} from 'realm';
 import {appId, devMode, partitionValue} from '../../appConfig';
 import {Customer} from '../database/models/Customer';
@@ -16,6 +17,7 @@ const RealmContext = createContext<RealmContextProps>({} as RealmContextProps);
 
 export const RealmProvider: React.FC = ({children}) => {
   const [realm, setRealm] = useState<Realm | null>(null);
+  const [canDisplayInDevMode, setCanDisplayInDevMode] = useState(false);
 
   useEffect(() => {
     if (realm === null) {
@@ -24,6 +26,7 @@ export const RealmProvider: React.FC = ({children}) => {
     if (devMode) {
       seedRealm(realm);
     }
+    setCanDisplayInDevMode(true);
   }, [realm]);
 
   async function stablishRealmApp() {
@@ -71,7 +74,26 @@ export const RealmProvider: React.FC = ({children}) => {
   }, []);
 
   return (
-    <RealmContext.Provider value={{realm}}>{children}</RealmContext.Provider>
+    <RealmContext.Provider value={{realm}}>
+      {devMode ? (
+        canDisplayInDevMode ? (
+          children
+        ) : (
+          <View
+            style={{
+              display: 'flex',
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text>Modo de Desenvolvimento</Text>
+            <Text>Carregando...</Text>
+          </View>
+        )
+      ) : (
+        children
+      )}
+    </RealmContext.Provider>
   );
 };
 
