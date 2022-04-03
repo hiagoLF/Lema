@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
-import React from 'react';
-import {ScrollView} from 'react-native';
+import React, {useEffect} from 'react';
+import {NativeEventEmitter, ScrollView} from 'react-native';
 import {Appbar, Card} from 'react-native-paper';
 import {Delivery} from '../../../types/Models';
 import SimpleTable from '../../components/SimpleTable';
@@ -63,18 +63,33 @@ const Customers: React.FC = () => {
       return deliveriesResult;
     },
     data => {
-      const interesting = data.date > new Date();
+      const interesting = data.status === 0;
 
       return {
         key: data.name,
         value: formatDateToBr(data.date),
         interesting: interesting,
         props: {
-          ...data,
+          deliveryId: data._id,
+          deliveryName: data.name,
+          customerName: data.customer.name,
+          deliveryStatus: data.status,
+          deliveryDate: data.date,
         },
       };
     },
   );
+
+  useEffect(() => {
+    // Criar um listener para o evento de alteração da delivery
+    const eventEmitter = new NativeEventEmitter();
+    const eventListener = eventEmitter.addListener('update:delivery', () => {
+      console.log('Evento Recebido >> update:delivery');
+      onDeliveriesPageChange();
+    });
+
+    return () => eventListener.remove();
+  }, []);
 
   return (
     <Container>

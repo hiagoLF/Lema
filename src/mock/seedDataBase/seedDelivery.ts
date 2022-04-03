@@ -17,6 +17,7 @@ export function seedDelivery(realm: Realm) {
           _id: new ObjectID().toString(),
           name: faker.word.verb() + ' ' + faker.word.adjective(),
           date: faker.date.between('2021-01-01', '2023-01-01'),
+          status: faker.datatype.number(1),
           customer: customer,
         });
       }

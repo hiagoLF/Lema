@@ -7,19 +7,23 @@ interface ListItemProps {
   itemTitle: string;
   value: string;
   ocultDivider?: boolean;
+  color?: string;
 }
 
 const ListItem: React.FC<ListItemProps> = ({
   itemTitle,
   value,
   ocultDivider,
+  color,
 }) => {
   return (
     <View>
       {!ocultDivider && <Divider />}
       <ListTitle>{itemTitle}</ListTitle>
       {/* @ts-ignore */}
-      <ListText>{value}</ListText>
+      <ListText style={color ? {color, fontWeight: 'bold'} : {}}>
+        {value}
+      </ListText>
     </View>
   );
 };

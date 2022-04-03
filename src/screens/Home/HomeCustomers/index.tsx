@@ -32,7 +32,6 @@ const HomeCustomers: React.FC = () => {
     10,
     dbRealm => {
       const deliveriesResult = dbRealm.objects<Customer>('Customer');
-      console.log(deliveriesResult);
       return deliveriesResult;
     },
     data => {

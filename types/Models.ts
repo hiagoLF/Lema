@@ -8,5 +8,6 @@ export type Delivery = {
   _id: string;
   name: string;
   date: Date;
+  status: number;
   customer: Customer;
 };

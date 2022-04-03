@@ -42,8 +42,8 @@ export function useAppTable<Type>(
     findDataForTable(0);
   }, []);
 
-  function onPageChange(page: number) {
-    findDataForTable(page);
+  function onPageChange(page?: number) {
+    findDataForTable(page || paginationInfo?.currentPage || 0);
   }
 
   return {tableData, paginationInfo, onPageChange};
