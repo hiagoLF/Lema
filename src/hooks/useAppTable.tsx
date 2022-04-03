@@ -43,7 +43,14 @@ export function useAppTable<Type>(
   }, []);
 
   function onPageChange(page?: number) {
-    findDataForTable(page || paginationInfo?.currentPage || 0);
+    const pageParameter =
+      page !== undefined
+        ? page
+        : paginationInfo?.currentPage !== undefined
+        ? paginationInfo?.currentPage
+        : 0;
+
+    findDataForTable(pageParameter);
   }
 
   return {tableData, paginationInfo, onPageChange};
