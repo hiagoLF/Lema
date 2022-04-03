@@ -31,8 +31,8 @@ const HomeCustomers: React.FC = () => {
     realm,
     10,
     dbRealm => {
-      const deliveriesResult = dbRealm.objects<Customer>('Customer');
-      return deliveriesResult;
+      const customersResult = dbRealm.objects<Customer>('Customer');
+      return customersResult;
     },
     data => {
       const interesting = data.status === 1 ? true : false;
