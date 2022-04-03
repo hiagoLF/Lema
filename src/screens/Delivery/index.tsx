@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {Alert, NativeEventEmitter, ScrollView, View} from 'react-native';
+import {Alert, ScrollView, View} from 'react-native';
 import {Appbar, Card, TouchableRipple} from 'react-native-paper';
 import ListItem from '../../components/ListItem';
 import {
@@ -14,6 +14,7 @@ import {formatDateToBr, getDateDiferenceInDays} from '../../utils/date';
 import {useTheme} from 'react-native-paper';
 import {useRealmContext} from '../../context/RealmContext';
 import {Delivery as DeliveryType} from '../../../types/Models';
+import {useNativeEvents} from '../../hooks/useNativeEvents';
 
 type RootStackParamList = {
   Delivery: {
@@ -29,6 +30,8 @@ type ProfileScreenRouteProp = RouteProp<RootStackParamList, 'Delivery'>;
 
 const Delivery: React.FC = () => {
   const navigation = useNavigation();
+  const {emitEvent: emitDeliveryUpdatedEvent} =
+    useNativeEvents('update:delivery');
   const [deliveringLoading, setDeliveringLoading] = useState(false);
   const {
     params: {
@@ -104,8 +107,7 @@ const Delivery: React.FC = () => {
     }
 
     // Emitir um evento que a delivery foi alterada
-    const emmiter = new NativeEventEmitter();
-    emmiter.emit('update:delivery', 'Delivery updated');
+    emitDeliveryUpdatedEvent({});
 
     updateData();
 

@@ -5,6 +5,7 @@ import DinamicSearchBar from '../../../components/DinamicSearchBar';
 import SimpleTable from '../../../components/SimpleTable';
 import {useRealmContext} from '../../../context/RealmContext';
 import {useAppTable} from '../../../hooks/useAppTable';
+import {useNativeEvents} from '../../../hooks/useNativeEvents';
 import {formatDateToBr} from '../../../utils/date';
 
 const HomeDeliveries: React.FC = () => {
@@ -40,6 +41,9 @@ const HomeDeliveries: React.FC = () => {
       };
     },
   );
+  useNativeEvents('update:delivery', () => {
+    onDeliveriesPageChange();
+  });
 
   return (
     <ScrollView>

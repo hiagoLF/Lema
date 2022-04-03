@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
-import React, {useEffect} from 'react';
-import {NativeEventEmitter, ScrollView} from 'react-native';
+import React from 'react';
+import {ScrollView} from 'react-native';
 import {Appbar, Card} from 'react-native-paper';
 import {Delivery} from '../../../types/Models';
 import SimpleTable from '../../components/SimpleTable';
@@ -13,6 +13,7 @@ import {
 } from '../../components/Styled';
 import {useRealmContext} from '../../context/RealmContext';
 import {useAppTable} from '../../hooks/useAppTable';
+import {useNativeEvents} from '../../hooks/useNativeEvents';
 import {formatDateToBr} from '../../utils/date';
 
 const events = new Array(5)
@@ -48,7 +49,6 @@ const Customers: React.FC = () => {
     params: {customerName, customerId},
   } = useRoute<ProfileScreenRouteProp>();
   const {realm} = useRealmContext();
-
   const {
     tableData: tableDeliveries,
     paginationInfo: deliveriesPaginationInfo,
@@ -79,17 +79,9 @@ const Customers: React.FC = () => {
       };
     },
   );
-
-  useEffect(() => {
-    // Criar um listener para o evento de alteração da delivery
-    const eventEmitter = new NativeEventEmitter();
-    const eventListener = eventEmitter.addListener('update:delivery', () => {
-      console.log('Evento Recebido >> update:delivery');
-      onDeliveriesPageChange();
-    });
-
-    return () => eventListener.remove();
-  }, []);
+  useNativeEvents('update:delivery', () => {
+    onDeliveriesPageChange();
+  });
 
   return (
     <Container>

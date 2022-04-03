@@ -47,7 +47,7 @@ export function useAppTable<Type>(
       page !== undefined
         ? page
         : paginationInfo?.currentPage !== undefined
-        ? paginationInfo?.currentPage
+        ? paginationInfo.currentPage
         : 0;
 
     findDataForTable(pageParameter);
